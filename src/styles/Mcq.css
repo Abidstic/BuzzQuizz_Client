@@ -90,7 +90,7 @@ input[type='radio']:checked ~ .check {
 }
 
 input[type='radio']:checked ~ .check::before {
-    background: whitesmoke;
+    background: var(--clr-secondary);
 }
 
 input[type='radio']:checked ~ .radio_lable {

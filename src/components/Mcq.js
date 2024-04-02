@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Mcq.css';
 import { useFetchQestion } from '../hooks/FetchQuestion';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateResult } from '../hooks/setResult';
 
-export default function Mcq() {
-    const [checked, setCheck] = useState(undefined);
+export default function Mcq({ onChecked }) {
+    const [checked, setChecked] = useState(undefined);
     const [{ isLoading, apiData, serverError }] = useFetchQestion();
+    const trace = useSelector((state) => state.questions.trace);
+    const result = useSelector((state) => state.result.result);
+    const dispatch = useDispatch();
     const questions = useSelector(
         (state) => state.questions.queue[state.questions.trace]
     );
     useEffect(() => {
-        // console.log(questions);
-    });
-    function onSelect() {
-        setCheck(true);
-        console.log('Radio button is selected');
+        dispatch(updateResult({ trace, checked }));
+    }, [checked]);
+
+    function onSelect(i) {
+        onChecked(i);
+        setChecked(i);
+        dispatch(updateResult({ trace, checked }));
     }
     if (isLoading) return <h3 className="text-light">isLoading</h3>;
     if (serverError)
@@ -27,7 +33,7 @@ export default function Mcq() {
                     <li key={i}>
                         <input
                             type="radio"
-                            value={checked}
+                            value={false}
                             name="options"
                             id={`q${i}-option`}
                             onChange={() => onSelect(i)}
@@ -36,7 +42,11 @@ export default function Mcq() {
                         <label className="radio_lable" htmlFor={`q${i}-option`}>
                             {q}
                         </label>
-                        <div className="check checked"></div>
+                        <div
+                            className={`check ${
+                                result[trace] == i ? 'checked' : ''
+                            }`}
+                        ></div>
                     </li>
                 ))}
             </ul>
