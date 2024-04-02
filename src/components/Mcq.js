@@ -10,7 +10,7 @@ export default function Mcq() {
         (state) => state.questions.queue[state.questions.trace]
     );
     useEffect(() => {
-        console.log(questions);
+        // console.log(questions);
     });
     function onSelect() {
         setCheck(true);

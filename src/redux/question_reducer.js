@@ -6,7 +6,7 @@ export const questionReducer = createSlice({
     initialState: {
         queue: [],
         answers: [],
-        trace: 3,
+        trace: 0,
     },
     reducers: {
         startExamAction: (state, action) => {
@@ -16,18 +16,18 @@ export const questionReducer = createSlice({
                 // answers
             };
         },
-        // moveNextAction : (state) => {
-        //     return {
-        //         ...state,
-        //         trace : state.trace + 1
-        //     }
-        // },
-        // movePrevAction : (state) => {
-        //     return {
-        //         ...state,
-        //         trace : state.trace - 1
-        //     }
-        // },
+        moveNextAction: (state) => {
+            return {
+                ...state,
+                trace: state.trace + 1,
+            };
+        },
+        movePrevAction: (state) => {
+            return {
+                ...state,
+                trace: state.trace - 1,
+            };
+        },
         // resetAllAction : () => {
         //     return {
         //         queue: [],
