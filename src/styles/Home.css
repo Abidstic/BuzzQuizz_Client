@@ -9,12 +9,28 @@
     );
 }
 .home_body {
+    height: 100vh;
+    margin: 24px;
+}
+.app_title {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--clr-accent);
+    text-align: left;
+}
+
+.body_layout {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
-    margin: 24px;
+    margin-top: 150px;
+}
+.header_body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .title_body {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;

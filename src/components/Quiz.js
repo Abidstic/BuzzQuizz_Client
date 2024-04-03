@@ -14,9 +14,8 @@ export default function Quiz() {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
     const [check, setCheck] = useState(undefined);
-
     useEffect(() => {
-        console.log(state.result.result);
+        console.log(state);
     });
 
     function onPrev() {
@@ -31,6 +30,8 @@ export default function Quiz() {
                 dispatch(PushAnswer(check));
             }
         }
+        /**reset value */
+        setCheck(undefined);
     }
     function onChecked(check) {
         setCheck(check);
@@ -41,7 +42,7 @@ export default function Quiz() {
     }
     return (
         <div className="quiz_body">
-            <h1 className="course_title">Software engineering 101</h1>
+            <h1 className="course_title">{state.questions.courseName}</h1>
             <Mcq onChecked={onChecked} />
 
             <div className="grid">

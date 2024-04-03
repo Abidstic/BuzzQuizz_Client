@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { getServerData } from '../helper/helper';
-import data from '../database/data';
+import data, { answers } from '../database/data';
 
 /** redux actions */
-import * as Action from "../redux/question_reducer";
+import * as Action from '../redux/question_reducer';
 
 /** fetch question hook to fetch api data and set value to store */
 export const useFetchQestion = () => {
@@ -25,10 +25,13 @@ export const useFetchQestion = () => {
 
                 if (questions.length > 0) {
                     setGetData((prev) => ({ ...prev, isLoading: false }));
-                    setGetData((prev) => ({ ...prev, apiData: questions }));
+                    setGetData((prev) => ({
+                        ...prev,
+                        apiData: { questions, answers },
+                    }));
 
                     /** dispatch an action */
-                    dispatch(Action.startExamAction(questions));
+                    dispatch(Action.startExamAction({ questions, answers }));
                 } else {
                     throw new Error('No Question Avalibale');
                 }

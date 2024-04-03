@@ -20,3 +20,4 @@ export default [
         options: ['OOP', 'Procedural', 'Object Based', 'Machiene'],
     },
 ];
+export const answers = [0, 1, 3, 2];

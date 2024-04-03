@@ -7,13 +7,18 @@ export const questionReducer = createSlice({
         queue: [],
         answers: [],
         trace: 0,
+        courseName: null,
     },
     reducers: {
+        setCourseName: (state, action) => {
+            state.courseName = action.payload;
+        },
         startExamAction: (state, action) => {
+            let { questions, answers } = action.payload;
             return {
                 ...state,
-                queue: action.payload,
-                // answers
+                queue: questions,
+                answers,
             };
         },
         moveNextAction: (state) => {
@@ -28,17 +33,18 @@ export const questionReducer = createSlice({
                 trace: state.trace - 1,
             };
         },
-        resetAllAction : () => {
+        resetAllAction: () => {
             return {
                 queue: [],
-                answers : [],
-                trace : 0
-            }
-        }
+                answers: [],
+                trace: 0,
+            };
+        },
     },
 });
 
 export const {
+    setCourseName,
     startExamAction,
     moveNextAction,
     movePrevAction,
