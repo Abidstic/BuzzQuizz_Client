@@ -17,9 +17,5 @@ export function flag_result(totalpoints, earnPoints) {
 /** check user auth  */
 export function CheckUserExist({ children }) {
     const auth = useSelector((state) => state.result.userId);
-    return auth ? (
-        children
-    ) : (
-        <Navigate to={'/register'} replace={true}></Navigate>
-    );
+    return auth ? children : <Navigate to={'/login'} replace={true}></Navigate>;
 }

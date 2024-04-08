@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
 import '../styles/Register.css';
-import { Navigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { setCourseName } from '../redux/question_reducer';
 import { setUserId } from '../redux/result_reducer';
-import { useDispatch } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 export default function Register() {
     const dispatch = useDispatch();
     const [values, setValues] = useState({
         userName: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        email: '',
         courseName: '',
+        userRole: 'student',
     });
 
     const handleInputChange = (event) => {
@@ -27,15 +32,25 @@ export default function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (values.userName && values.courseName) {
+        if (
+            values.userName &&
+            values.password &&
+            values.firstName &&
+            values.lastName &&
+            values.email &&
+            values.courseName
+        ) {
+            // Simulate registration logic here, for now just dispatching username and course name
             setValid(true);
-            dispatch(setCourseName(values.courseName));
             dispatch(setUserId(values.userName));
+            dispatch(setCourseName(values.courseName));
         }
         setSubmitted(true);
     };
+
     return (
         <div className="register_body">
+            <h1>Register</h1>
             <form className="register_form" onSubmit={handleSubmit}>
                 {submitted && valid && (
                     <Navigate to={'/'} replace="true"></Navigate>
@@ -50,25 +65,96 @@ export default function Register() {
                         onChange={handleInputChange}
                     />
                 )}
-
                 {submitted && !values.userName && (
-                    <span id="first-name-error">Please enter a user name</span>
+                    <span id="username-error">Please enter a username</span>
+                )}
+
+                {!valid && (
+                    <input
+                        className="form_field"
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        value={values.password}
+                        onChange={handleInputChange}
+                    />
+                )}
+                {submitted && !values.password && (
+                    <span id="password-error">Please enter a password</span>
                 )}
 
                 {!valid && (
                     <input
                         className="form_field"
                         type="text"
-                        placeholder="Course name"
+                        placeholder="First Name"
+                        name="firstName"
+                        value={values.firstName}
+                        onChange={handleInputChange}
+                    />
+                )}
+                {submitted && !values.firstName && (
+                    <span id="first-name-error">
+                        Please enter your first name
+                    </span>
+                )}
+
+                {!valid && (
+                    <input
+                        className="form_field"
+                        type="text"
+                        placeholder="Last Name"
+                        name="lastName"
+                        value={values.lastName}
+                        onChange={handleInputChange}
+                    />
+                )}
+                {submitted && !values.lastName && (
+                    <span id="last-name-error">
+                        Please enter your last name
+                    </span>
+                )}
+
+                {!valid && (
+                    <input
+                        className="form_field"
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        value={values.email}
+                        onChange={handleInputChange}
+                    />
+                )}
+                {submitted && !values.email && (
+                    <span id="email-error">Please enter your email</span>
+                )}
+
+                {!valid && (
+                    <input
+                        className="form_field"
+                        type="text"
+                        placeholder="Course Name"
                         name="courseName"
                         value={values.courseName}
                         onChange={handleInputChange}
                     />
                 )}
-
                 {submitted && !values.courseName && (
-                    <span id="last-name-error">Please enter a course name</span>
+                    <span id="course-name-error">
+                        Please enter a course name
+                    </span>
                 )}
+
+                <select
+                    className="form_field"
+                    name="userRole"
+                    value={values.userRole}
+                    onChange={handleInputChange}
+                >
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                </select>
+
                 {!valid && (
                     <button className="form_field" type="submit">
                         Register

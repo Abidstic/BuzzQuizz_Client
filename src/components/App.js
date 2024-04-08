@@ -3,6 +3,7 @@ import Home from './Home';
 import Quiz from './Quiz';
 import Result from './Result';
 import Register from './Register';
+import Login from './Login';
 import { CheckUserExist } from '../helper/helper';
 const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
     {
         path: '/register',
         element: <Register></Register>,
+    },
+    {
+        path: '/login',
+        element: <Login></Login>,
     },
 ]);
 

@@ -8,7 +8,7 @@
         var(--clr-secondary) 100%
     );
 }
-.register_body {
+.login_body {
     display: flex;
     min-height: 100vh;
     justify-content: center;
@@ -18,7 +18,7 @@
     margin: auto;
 }
 
-.register_form {
+.login_form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

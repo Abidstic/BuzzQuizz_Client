@@ -8,15 +8,15 @@ export default function Home() {
     function navigateToQuiz() {
         navigate('/quiz');
     }
-    function navigateToRegister() {
-        navigate('/register');
+    function navigateToLogin() {
+        navigate('/login');
     }
     return (
         <div className="home_body">
             <div className="header_body">
                 <div className="app_title"> BuzzQuizz</div>
                 <div>
-                    <button onClick={navigateToRegister}>Register</button>
+                    <button onClick={navigateToLogin}>Log In</button>
                 </div>
             </div>
             <div className="body_layout">
