@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setCourseName } from '../redux/question_reducer';
 import { setUserId } from '../redux/result_reducer';
 import { Navigate } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Register() {
     const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export default function Register() {
     const [submitted, setSubmitted] = useState(false);
     const [valid, setValid] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (
             values.userName &&
@@ -44,6 +45,18 @@ export default function Register() {
             setValid(true);
             dispatch(setUserId(values.userName));
             dispatch(setCourseName(values.courseName));
+            try {
+                const response = await axios.post(
+                    'http://localhost:8000/api/register/',
+                    values
+                );
+                const { userId, token } = response.data;
+                // Store the userId and token in the client (e.g., local storage, Redux store)
+                localStorage.setItem('userId', userId);
+                localStorage.setItem('token', token);
+            } catch (error) {
+                console.error('Error registering user:', error);
+            }
         }
         setSubmitted(true);
     };
