@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import '../styles/Login.css';
 import { useDispatch } from 'react-redux';
 import { setUserId } from '../redux/result_reducer';
-import { Navigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Navigate, Link } from 'react-router-dom'; // Import Link from react-router-dom;
+import axios from 'axios';
 
 export default function Login() {
     const dispatch = useDispatch();
@@ -24,12 +25,23 @@ export default function Login() {
     const [submitted, setSubmitted] = useState(false);
     const [valid, setValid] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (values.userName && values.password) {
             // Simulate login logic here, for now just dispatching username
             setValid(true);
             dispatch(setUserId(values.userName));
+            try {
+                const response = await axios.post(
+                    'http://localhost:8000/api/user/login',
+                    values
+                );
+                const { userId, token } = response.data;
+                localStorage.setItem('userId', userId);
+                localStorage.setItem('token', token);
+            } catch (error) {
+                console.error('Error logging in:', error);
+            }
         }
         setSubmitted(true);
     };

@@ -47,7 +47,7 @@ export default function Register() {
             dispatch(setCourseName(values.courseName));
             try {
                 const response = await axios.post(
-                    'http://localhost:8000/api/register/',
+                    'http://localhost:8000/api/user/register',
                     values
                 );
                 const { userId, token } = response.data;
