@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import '../styles/Login.css';
 import { useDispatch } from 'react-redux';
-import { setUserId } from '../redux/result_reducer';
 import { Navigate, Link } from 'react-router-dom'; // Import Link from react-router-dom;
 import axios from 'axios';
 
 export default function Login() {
-    const dispatch = useDispatch();
     const [values, setValues] = useState({
         userName: '',
         password: '',
@@ -30,7 +28,6 @@ export default function Login() {
         if (values.userName && values.password) {
             // Simulate login logic here, for now just dispatching username
             setValid(true);
-            dispatch(setUserId(values.userName));
             try {
                 const response = await axios.post(
                     'http://localhost:8000/api/user/login',

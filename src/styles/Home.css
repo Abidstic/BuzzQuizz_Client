@@ -32,6 +32,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
 .title_body {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: 48px;
@@ -57,4 +58,71 @@ button {
 button:hover {
     background-color: #1b1a55;
     color: white;
+}
+.user-menu {
+    position: relative;
+    font-size: 24px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 600;
+    padding: 8px;
+    color: var(--clr-secondary);
+    background-color: #ebf400;
+    border: 1px solid whitesmoke;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px;
+}
+.user-menu:hover {
+    background-color: #1b1a55;
+    color: white;
+}
+.user-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown-icon {
+    margin-left: 8px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--clr-accent);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid whitesmoke;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.dropdown-content span {
+    display: block;
+    padding: 8px 16px;
+    color: var(--clr-secondary);
+    font-size: 18px;
+}
+
+.dropdown-content button {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 2px solid whitesmoke;
+    outline: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.logout:hover {
+    background-color: var(--clr-secondary);
+    color: whitesmoke;
+}
+
+.user-menu:hover .dropdown-content {
+    display: block;
 }

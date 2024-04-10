@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '../styles/Register.css';
 import { useDispatch } from 'react-redux';
 import { setCourseName } from '../redux/question_reducer';
-import { setUserId } from '../redux/result_reducer';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -43,7 +42,6 @@ export default function Register() {
         ) {
             // Simulate registration logic here, for now just dispatching username and course name
             setValid(true);
-            dispatch(setUserId(values.userName));
             dispatch(setCourseName(values.courseName));
             try {
                 const response = await axios.post(
