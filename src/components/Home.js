@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { setUser, clearUser } from '../redux/user_reducer';
+import { clearUser } from '../redux/user_reducer';
 
 export default function Home() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { userId, userName, userRole, isLoggedIn } = useSelector(
+    const { userName, userRole, isLoggedIn } = useSelector(
         (state) => state.user
     );
     const state = useSelector((state) => state);
@@ -18,6 +18,7 @@ export default function Home() {
         // Check if the user is logged in
         const token = localStorage.getItem('token');
         const id = localStorage.getItem('userId');
+
         if (token && id) {
             // Make a request to the /verify endpoint to get the user data
             axios
@@ -29,13 +30,7 @@ export default function Home() {
                 .then((response) => {
                     const user = response.data;
 
-                    dispatch(
-                        setUser({
-                            userId: user.UserID,
-                            userName: user.Username,
-                            userRole: user.UserRole,
-                        })
-                    ); // Ensure response data is correct
+                    // Ensure response data is correct
                 })
                 .catch((error) => {
                     console.error('Error verifying token:', error);
@@ -63,6 +58,9 @@ export default function Home() {
     function navigateToLogin() {
         navigate('/login');
     }
+    function handleCourse() {
+        navigate('/course');
+    }
     return (
         <div className="home_body">
             <div className="header_body">
@@ -77,6 +75,14 @@ export default function Home() {
                         </div>
                         <div class="dropdown-content">
                             <span>{userRole}</span>
+                            {userRole === 'admin' && (
+                                <button
+                                    className="course"
+                                    onClick={handleCourse}
+                                >
+                                    Courses
+                                </button>
+                            )}
                             <button className="logout" onClick={handleLogout}>
                                 Logout
                             </button>

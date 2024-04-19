@@ -4,7 +4,11 @@ import Quiz from './Quiz';
 import Result from './Result';
 import Register from './Register';
 import Login from './Login';
-import { CheckUserExist } from '../helper/helper';
+import Course from './Course';
+import QuestionCreator from './Question';
+import AllCourses from './Course_dashborad';
+
+import { CheckUserExist, CheckUserAdmin } from '../helper/UserVerify';
 const router = createBrowserRouter([
     {
         path: '/',
@@ -33,6 +37,18 @@ const router = createBrowserRouter([
     {
         path: '/login',
         element: <Login></Login>,
+    },
+    {
+        path: '/course',
+        element: <Course></Course>,
+    },
+    {
+        path: '/create_questions',
+        element: <QuestionCreator></QuestionCreator>,
+    },
+    {
+        path: '/course_view',
+        element: <AllCourses></AllCourses>,
     },
 ]);
 

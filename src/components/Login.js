@@ -3,8 +3,10 @@ import '../styles/Login.css';
 import { useDispatch } from 'react-redux';
 import { Navigate, Link } from 'react-router-dom'; // Import Link from react-router-dom;
 import axios from 'axios';
+import { setUser } from '../redux/user_reducer';
 
 export default function Login() {
+    const dispatch = useDispatch();
     const [values, setValues] = useState({
         userName: '',
         password: '',
@@ -36,6 +38,22 @@ export default function Login() {
                 const { userId, token } = response.data;
                 localStorage.setItem('userId', userId);
                 localStorage.setItem('token', token);
+                const userResponse = await axios.get(
+                    `http://localhost:8000/api/user/${userId}`,
+                    {
+                        headers: {
+                            Authorization: `${token}`,
+                        },
+                    }
+                );
+                const user = userResponse.data;
+                dispatch(
+                    setUser({
+                        userId: user.UserID,
+                        userName: user.Username,
+                        userRole: user.UserRole,
+                    })
+                );
             } catch (error) {
                 console.error('Error logging in:', error);
             }
