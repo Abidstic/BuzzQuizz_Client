@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { clearUser } from '../redux/user_reducer';
+import { clearUser, setUser } from '../redux/user_reducer';
 
 export default function Home() {
     const navigate = useNavigate();
@@ -30,7 +30,13 @@ export default function Home() {
                 .then((response) => {
                     const user = response.data;
 
-                    // Ensure response data is correct
+                    dispatch(
+                        setUser({
+                            userId: user.UserID,
+                            userName: user.Username,
+                            userRole: user.UserRole,
+                        })
+                    );
                 })
                 .catch((error) => {
                     console.error('Error verifying token:', error);
@@ -53,7 +59,7 @@ export default function Home() {
     }
 
     function navigateToQuiz() {
-        navigate('/quiz');
+        navigate('/course_view');
     }
     function navigateToLogin() {
         navigate('/login');

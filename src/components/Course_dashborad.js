@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../styles/Course_dashboard.css';
 
 const AllCourses = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [userRole, setRole] = useState(null);
+    const user = useSelector((state) => state.user);
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -14,7 +17,9 @@ const AllCourses = () => {
                     'http://localhost:8000/api/course/all'
                 );
                 setCourses(response.data);
-                console.log(response.data);
+
+                setRole(user.userRole);
+
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching courses:', error);
@@ -36,9 +41,16 @@ const AllCourses = () => {
                 {courses?.map((course) => (
                     <div key={course?.CourseID} className="course-card">
                         <h3>{course?.CourseName}</h3>
-                        <Link to={`/course/${course.CourseID}`} className="btn">
-                            View Course
-                        </Link>
+                        {userRole === 'teacher' && (
+                            <Link to={`/create_quiz`} className="btn">
+                                Create Exam
+                            </Link>
+                        )}
+                        {userRole === 'student' && (
+                            <Link to={`/quiz`} className="btn">
+                                Take Exam
+                            </Link>
+                        )}
                     </div>
                 ))}
             </div>

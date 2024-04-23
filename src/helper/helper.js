@@ -15,13 +15,32 @@ export function flag_result(totalpoints, earnPoints) {
     return (totalpoints * 50) / 100 < earnPoints;
 }
 /** check user auth  */
-// export function CheckUserExist({ children }) {
-//     const auth = useSelector((state) => state.user.userId);
-//     return auth ? children : <Navigate to={'/login'} replace={true}></Navigate>;
-// }
-// export function CheckUserAdmin({ children }) {
-//     const auth = useSelector((state) => state.user.userRole);
-//     const state = useSelector((state) => state);
-//     console.log(state);
-//     return auth ? children : <Navigate to={'/'} replace={true}></Navigate>;
-// }
+export function CheckUserExist({ children }) {
+    const auth = useSelector((state) => state.user.userId);
+    return auth ? children : <Navigate to={'/login'} replace={true}></Navigate>;
+}
+export function CheckUserAdmin({ children }) {
+    const auth = useSelector((state) => state.user.userRole);
+
+    return auth === 'admin' ? (
+        children
+    ) : (
+        <Navigate to={'/'} replace={true}></Navigate>
+    );
+}
+export function CheckUserTeacher({ children }) {
+    const auth = useSelector((state) => state.user.userRole);
+    return auth === 'teacher' ? (
+        children
+    ) : (
+        <Navigate to={'/'} replace={true}></Navigate>
+    );
+}
+export function CheckUserStudent({ children }) {
+    const auth = useSelector((state) => state.user.userRole);
+    return auth === 'student' ? (
+        children
+    ) : (
+        <Navigate to={'/'} replace={true}></Navigate>
+    );
+}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/Course.css';
+import { useSelector } from 'react-redux';
 
 export default function Course() {
     const [courses, setCourses] = useState([]);
@@ -8,9 +9,10 @@ export default function Course() {
         CourseName: '',
         TeacherID: '',
     });
+    const state = useSelector((state) => state);
+    console.log(state);
     useEffect(() => {
         fetchCourses();
-        console.log('-----here----');
     }, []);
 
     const fetchCourses = async () => {

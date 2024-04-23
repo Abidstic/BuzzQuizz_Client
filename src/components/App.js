@@ -7,8 +7,15 @@ import Login from './Login';
 import Course from './Course';
 import QuestionCreator from './Question';
 import AllCourses from './Course_dashborad';
+import CreateQuizForm from './Create_Quiz.js';
+import { useSelector } from 'react-redux';
 
-import { CheckUserExist, CheckUserAdmin } from '../helper/UserVerify';
+import {
+    CheckUserStudent,
+    CheckUserTeacher,
+    CheckUserExist,
+    CheckUserAdmin,
+} from '../helper/helper.js';
 const router = createBrowserRouter([
     {
         path: '/',
@@ -17,17 +24,17 @@ const router = createBrowserRouter([
     {
         path: '/quiz',
         element: (
-            <CheckUserExist>
+            <CheckUserStudent>
                 <Quiz />
-            </CheckUserExist>
+            </CheckUserStudent>
         ),
     },
     {
         path: '/result',
         element: (
-            <CheckUserExist>
+            <CheckUserStudent>
                 <Result />
-            </CheckUserExist>
+            </CheckUserStudent>
         ),
     },
     {
@@ -40,19 +47,41 @@ const router = createBrowserRouter([
     },
     {
         path: '/course',
-        element: <Course></Course>,
+        element: (
+            <CheckUserAdmin>
+                <Course />
+            </CheckUserAdmin>
+        ),
     },
     {
         path: '/create_questions',
-        element: <QuestionCreator></QuestionCreator>,
+        element: (
+            <CheckUserTeacher>
+                <QuestionCreator />
+            </CheckUserTeacher>
+        ),
     },
     {
         path: '/course_view',
-        element: <AllCourses></AllCourses>,
+        element: (
+            <CheckUserExist>
+                <AllCourses />
+            </CheckUserExist>
+        ),
+    },
+    {
+        path: '/create_quiz',
+        element: (
+            <CheckUserTeacher>
+                <CreateQuizForm />
+            </CheckUserTeacher>
+        ),
     },
 ]);
 
 function App() {
+    const state = useSelector((state) => state);
+    console.log(state);
     return (
         <>
             <RouterProvider router={router} />

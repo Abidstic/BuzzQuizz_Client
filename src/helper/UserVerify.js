@@ -22,6 +22,7 @@ export function CheckUserExist({ children }) {
                     }
                 );
                 const user = response.data;
+                console.log(user);
                 dispatch(
                     setUser({
                         userId: user.UserID,
