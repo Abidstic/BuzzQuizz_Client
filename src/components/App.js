@@ -8,6 +8,7 @@ import Course from './Course';
 import QuestionCreator from './Question';
 import AllCourses from './Course_dashborad';
 import CreateQuizForm from './Create_Quiz.js';
+import AllQuizzes from './Quiz_dashboard.js';
 import { useSelector } from 'react-redux';
 
 import {
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
             <CheckUserTeacher>
                 <CreateQuizForm />
             </CheckUserTeacher>
+        ),
+    },
+    {
+        path: '/quiz_view',
+        element: (
+            <CheckUserStudent>
+                <AllQuizzes />
+            </CheckUserStudent>
         ),
     },
 ]);

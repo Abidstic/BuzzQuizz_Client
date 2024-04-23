@@ -6,9 +6,11 @@ export function attempts_Number(result) {
 }
 export function earn_points(result, answers) {
     return result
-        .map((elements, i) => answers[i] === elements)
-        .filter((i) => i)
-        .map((i) => 10)
+        .map((selectedOption, i) =>
+            answers[i].CorrectOptions.includes(selectedOption)
+        )
+        .filter((isCorrect) => isCorrect)
+        .map(() => 10)
         .reduce((prev, curr) => prev + curr, 0);
 }
 export function flag_result(totalpoints, earnPoints) {

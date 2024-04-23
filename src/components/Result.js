@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { resetAllAction } from '../redux/question_reducer';
 import { resetResultAction } from '../redux/result_reducer';
 import { attempts_Number, earn_points, flag_result } from '../helper/helper';
+import { resetOther } from '../redux/other_reducer';
 
 export default function Result() {
     const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function Result() {
         console.log('Restart the exam');
         dispatch(resetAllAction());
         dispatch(resetResultAction());
+        dispatch(resetOther());
     }
     return (
         <div className="container">

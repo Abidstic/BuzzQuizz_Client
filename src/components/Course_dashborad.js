@@ -58,7 +58,11 @@ const AllCourses = () => {
                             </Link>
                         )}
                         {userRole === 'student' && (
-                            <Link to={`/quiz`} className="btn">
+                            <Link
+                                to={`/quiz_view`}
+                                className="btn"
+                                onClick={() => handleCourseId(course.CourseID)}
+                            >
                                 Take Exam
                             </Link>
                         )}

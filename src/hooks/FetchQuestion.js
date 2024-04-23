@@ -1,39 +1,48 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-// import { getServerData } from '../helper/helper';
-import data, { answers } from '../database/data';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 
 /** redux actions */
 import * as Action from '../redux/question_reducer';
 
 /** fetch question hook to fetch api data and set value to store */
-export const useFetchQestion = () => {
+export const useFetchQuizData = () => {
     const dispatch = useDispatch();
+    const { quizId } = useSelector((state) => state.other);
     const [getData, setGetData] = useState({
         isLoading: false,
-        apiData: [],
+        apiData: {},
         serverError: null,
     });
 
     useEffect(() => {
         setGetData((prev) => ({ ...prev, isLoading: true }));
 
-        /** async function fetch backend data */
         (async () => {
             try {
-                let questions = await data;
+                const [questionsResponse, correctOptionsResponse] =
+                    await Promise.all([
+                        axios.get(
+                            `http://localhost:8000/api/question/quizzes/${quizId}/questions`
+                        ),
+                        axios.get(
+                            `http://localhost:8000/api/options/quizzes/${quizId}/options`
+                        ),
+                    ]);
 
-                if (questions.length > 0) {
+                const questions = questionsResponse.data;
+                const answers = correctOptionsResponse.data;
+
+                if (questions.length > 0 && answers.length > 0) {
                     setGetData((prev) => ({ ...prev, isLoading: false }));
                     setGetData((prev) => ({
                         ...prev,
                         apiData: { questions, answers },
                     }));
 
-                    /** dispatch an action */
                     dispatch(Action.startExamAction({ questions, answers }));
                 } else {
-                    throw new Error('No Question Avalibale');
+                    throw new Error('No Question or Correct Options Available');
                 }
             } catch (error) {
                 setGetData((prev) => ({ ...prev, isLoading: false }));

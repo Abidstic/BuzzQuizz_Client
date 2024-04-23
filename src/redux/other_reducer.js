@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-/** create reducer */
 export const otherReducer = createSlice({
     name: 'other',
     initialState: {
@@ -14,9 +13,12 @@ export const otherReducer = createSlice({
         setQuizID: (state, action) => {
             state.quizId = action.payload;
         },
+        resetOther: (state) => {
+            state.courseId = null;
+            state.quizId = null;
+        },
     },
 });
 
-export const { setCourseId, setQuizID } = otherReducer.actions;
-
+export const { setCourseId, setQuizID, resetOther } = otherReducer.actions;
 export default otherReducer.reducer;

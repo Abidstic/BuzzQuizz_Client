@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/Question.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { resetOther } from '../redux/other_reducer';
 const QuestionCreator = () => {
     const [questionType, setQuestionType] = useState('');
     const [question, setQuestion] = useState('');
@@ -10,6 +11,7 @@ const QuestionCreator = () => {
     const [correctOption, setCorrectOption] = useState('');
     const { quizId } = useSelector((state) => state.other);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleQuestionTypeChange = (e) => {
         setQuestionType(e.target.value);
@@ -67,6 +69,7 @@ const QuestionCreator = () => {
         }
     };
     const handleFinish = () => {
+        dispatch(resetOther());
         navigate('/');
     };
 
