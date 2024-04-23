@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/Create_Quiz.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setQuizID } from '../redux/other_reducer';
 
 const CreateQuizForm = () => {
     const navigate = useNavigate();
+    const { courseId } = useSelector((state) => state.other);
+    const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
         QuizTitle: '',
         Description: '',
         Duration: '',
         TeacherID: '',
-        CourseID: '',
+        CourseID: courseId,
         StartTime: '',
     });
 
@@ -27,7 +31,9 @@ const CreateQuizForm = () => {
                 'http://localhost:8000/api/quiz/',
                 formData
             );
-            console.log(response.data);
+            const { quizId } = response.data;
+
+            dispatch(setQuizID(quizId));
             navigate('/create_questions');
         } catch (error) {
             console.error('Error creating quiz:', error);

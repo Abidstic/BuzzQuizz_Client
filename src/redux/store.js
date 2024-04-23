@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import questionReducer from './question_reducer';
 import resultReducer from './result_reducer';
 import userReducer from './user_reducer';
+import otherReducer from './other_reducer';
 
 // configure persist config
 const persistConfig = {
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     questions: questionReducer,
     result: resultReducer,
     user: userReducer,
+    other: otherReducer,
 });
 
 // persist the root reducer

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../styles/Course_dashboard.css';
+import { setCourseId } from '../redux/other_reducer';
 
 const AllCourses = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [userRole, setRole] = useState(null);
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
 
     useEffect(() => {
@@ -30,6 +32,11 @@ const AllCourses = () => {
         fetchCourses();
     }, []);
 
+    const handleCourseId = (courseId) => {
+        // Dispatch the setCourseId action with courseId as the payload
+        dispatch(setCourseId(courseId));
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -42,7 +49,11 @@ const AllCourses = () => {
                     <div key={course?.CourseID} className="course-card">
                         <h3>{course?.CourseName}</h3>
                         {userRole === 'teacher' && (
-                            <Link to={`/create_quiz`} className="btn">
+                            <Link
+                                to={`/create_quiz`}
+                                className="btn"
+                                onClick={() => handleCourseId(course.CourseID)}
+                            >
                                 Create Exam
                             </Link>
                         )}

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/Question.css';
-const QuestionCreator = ({ quizId }) => {
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+const QuestionCreator = () => {
     const [questionType, setQuestionType] = useState('');
     const [question, setQuestion] = useState('');
     const [options, setOptions] = useState(['', '', '', '']);
     const [correctOption, setCorrectOption] = useState('');
+    const { quizId } = useSelector((state) => state.other);
+    const navigate = useNavigate();
 
     const handleQuestionTypeChange = (e) => {
         setQuestionType(e.target.value);
@@ -61,6 +65,9 @@ const QuestionCreator = ({ quizId }) => {
         } catch (error) {
             console.error('Error creating question:', error);
         }
+    };
+    const handleFinish = () => {
+        navigate('/');
     };
 
     const renderQuestionForm = () => {
@@ -156,6 +163,7 @@ const QuestionCreator = ({ quizId }) => {
             </select>
             {renderQuestionForm()}
             <button onClick={handleSubmit}>Create Question</button>
+            <button onClick={handleFinish}>Finish</button>
         </div>
     );
 };
