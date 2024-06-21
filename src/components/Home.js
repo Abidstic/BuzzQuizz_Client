@@ -12,22 +12,26 @@ export default function Home() {
     const { userName, userRole, isLoggedIn } = useSelector(
         (state) => state.user
     );
-    const state = useSelector((state) => state);
+    // const state = useSelector((state) => state);
 
     useEffect(() => {
-        // Check if the user is logged in
-        const token = localStorage.getItem('token');
-        const id = localStorage.getItem('userId');
+        const verifyUser = async () => {
+            // Check if the user is logged in
+            const token = localStorage.getItem('token');
+            const id = localStorage.getItem('userId');
 
-        if (token && id) {
-            // Make a request to the /verify endpoint to get the user data
-            axios
-                .get(`http://localhost:8000/api/user/${id}`, {
-                    headers: {
-                        Authorization: `${token}`,
-                    },
-                })
-                .then((response) => {
+            if (token && id) {
+                try {
+                    // Make a request to the /verify endpoint to get the user data
+                    const response = await axios.get(
+                        `http://localhost:8000/api/user/${id}`,
+                        {
+                            headers: {
+                                Authorization: `${token}`,
+                            },
+                        }
+                    );
+
                     const user = response.data;
 
                     dispatch(
@@ -37,15 +41,16 @@ export default function Home() {
                             userRole: user.UserRole,
                         })
                     );
-                })
-                .catch((error) => {
+                } catch (error) {
                     console.error('Error verifying token:', error);
                     dispatch(clearUser());
-                });
-        } else {
-            dispatch(clearUser());
-        }
-        console.log(state);
+                }
+            } else {
+                dispatch(clearUser());
+            }
+        };
+
+        verifyUser();
     }, [dispatch]);
 
     function handleLogout() {
